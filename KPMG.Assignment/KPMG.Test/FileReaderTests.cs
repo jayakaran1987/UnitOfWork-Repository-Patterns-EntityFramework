@@ -21,6 +21,11 @@ namespace KPMG.Test
             this.fileReader = new FileReader();
         }
 
+        // Incompleted Unit Test Coverage
+        // Due to the limited time I did not cover all unit test coverage.
+        // I have only created FileReaderTests to show that I have knowledge about Unit Testing and TDD.
+        // 
+
         [Test]
         public void FileNotExistThrowsFileReadWriteExceptionInCSV()
         {

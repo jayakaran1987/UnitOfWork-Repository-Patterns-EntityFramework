@@ -5,7 +5,7 @@
 5.	This MVC Application use the Unit of Work and Repository Pattern design. Controller will get the access of Unit of work. Unit of work having the reference of all other repositories  
 6.	Due to the limited time I did not cover all unit test coverage. I have only created Test Project to show that I have knowledge about Unit Testing and TDD.
 7.	I used Kendo UI components for GUI 
-8.  I did not commit the bin, obj, pakages directory, please use the nuget to dowload appropriate pakages 
+8.      I did not commit the bin, obj, packages directory, please use the nuget to download appropriate packages
 
 SetUp Instruction
 
