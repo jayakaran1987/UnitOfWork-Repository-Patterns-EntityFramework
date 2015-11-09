@@ -1,0 +1,82 @@
+﻿using System;
+using KPMG.Service.Interface;
+using KPMG.Service.Service;
+using KPMG.Service.CustomException;
+using NUnit.Framework;
+using KPMG.Service.DTO;
+using KPMG.Web.Models;
+using System.IO;
+
+namespace KPMG.Test
+{
+    [TestFixture]
+    public class FileReaderTests
+    {
+        // Initialize file reader
+        private IFileReader fileReader;
+
+        [SetUp]
+        public void SetUp()
+        {
+            this.fileReader = new FileReader();
+        }
+
+        [Test]
+        public void FileNotExistThrowsFileReadWriteExceptionInCSV()
+        {
+            
+            try
+            {
+                var obj = this.fileReader.GetCSVFileData(null);
+                foreach (ExtractedDataDTO dto in fileReader.GetExcelFileData(null))
+                {
+
+                }
+            }
+            catch (Exception e)
+            {
+                Assert.That(new ErrorResponseView(e).code, Is.EqualTo(100));
+            }
+        }
+
+        [Test]
+        public void ReadCSVFileForGivenPathReturnCorrectData()
+        {
+            string filepath = Path.GetFullPath("SampleCSV_1.csv");
+
+            foreach (ExtractedDataDTO dto in fileReader.GetCSVFileData(filepath))
+            {
+                Assert.That(dto.ToatalLineRecordsProcessed, Is.EqualTo(1));
+            }
+        }
+
+        [Test]
+        public void FileNotExistThrowsFileReadWriteExceptionInExcel()
+        {
+
+            try
+            {
+                var obj = this.fileReader.GetExcelFileData(null);
+                foreach (ExtractedDataDTO dto in fileReader.GetExcelFileData(null))
+                {
+
+                }
+            }
+            catch (Exception e)
+            {
+                Assert.That(new ErrorResponseView(e).code, Is.EqualTo(100));
+            }
+        }
+
+        [Test]
+        public void ReadExcelFileForGivenPathReturnCorrectData()
+        {
+            string filepath = Path.GetFullPath("SampleExcel_1.xlsx");
+
+            foreach (ExtractedDataDTO dto in fileReader.GetExcelFileData(filepath))
+            {
+                Assert.That(dto.ToatalLineRecordsProcessed, Is.EqualTo(1));
+            }
+        }
+    }
+}

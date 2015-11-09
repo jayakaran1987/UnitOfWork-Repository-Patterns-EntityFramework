@@ -1,0 +1,171 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<link rel="stylesheet" href="//kendo.cdn.telerik.com/2015.3.930/styles/kendo.common-material.min.css" />
+<link rel="stylesheet" href="//kendo.cdn.telerik.com/2015.3.930/styles/kendo.material.min.css" />
+
+<script src="//kendo.cdn.telerik.com/2015.3.930/js/jquery.min.js"></script>
+<script src="//kendo.cdn.telerik.com/2015.3.930/js/kendo.all.min.js"></script>
+
+<style>
+    body {
+        padding: 0px 0px 0px !important;
+    }
+
+    #tabstrip h2 {
+        font-weight: lighter;
+        font-size: 5em;
+        line-height: 1;
+        padding: 0 0 0 30px;
+        margin: 0;
+    }
+
+        #tabstrip h2 span {
+            background: none;
+            padding-left: 5px;
+            font-size: .3em;
+            vertical-align: top;
+        }
+
+    #tabstrip p {
+        margin: 0;
+        padding: 0;
+    }
+
+    .isa_success {
+        color: #4F8A10;
+        background-color: #DFF2BF;
+    }
+    .isa_warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+</style>
+
+<script>
+    $(document).ready(function () {
+        $("#tabstrip").kendoTabStrip({
+            animation: {
+                open: {
+                    effects: "fadeIn"
+                }
+            }
+        });
+
+        $("#files").kendoUpload({
+            async: {
+                saveUrl: "@Url.Action("UploadAccountData", "Home")",
+                autoUpload: false,
+                multiple: false,
+            },
+            success: onSuccess
+        });
+
+        $("#grid").kendoGrid({
+            dataSource: dataSource,
+            navigatable: true,
+            pageable: true,
+            height: 750,
+            toolbar: ["save", "cancel"],
+            columns: [
+                { field: "Account", title: "Account", width: 250 },
+                { field: "Description", title: "Description" },
+                { field: "CurrencyCode", title: "Currency Code", width: 150 },
+                { field: "Amount", title: "Amount", width: 150 },
+                { command: "destroy", title: "&nbsp;", width: 180 },
+            ],
+            editable: true
+        });
+    });
+
+    function onSuccess(e) {
+        // Array with information about the uploaded files
+        var proceesedLine = "Total number of records processed - " + e.response.ToatalLineRecordsProcessed;
+        $('#MsgId').text(proceesedLine);
+        $('#MsgId').show();
+
+        if (e.response.SkippedLines.length > 0)
+        {
+            var content = "<table>"
+            e.response.SkippedLines.forEach(function (data) {
+                var x = data;
+                content += '<tr><td>' + 'Skipped Line No ' + data.LineNumber + ' . Reson - ' + data.Message + ' </td></tr>';
+            })
+            content += "</table>"
+
+            $('#WarningMsgId').append(content);
+            $('#WarningMsgId').show();
+        }
+
+    }
+
+    var dataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: "@Url.Action("GetAccountData", "Home")",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                type: "POST",
+            },
+            update: {
+                url: "@Url.Action("UpdateAccountData", "Home")",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                type: "POST",
+            },
+            destroy: {
+                url: "@Url.Action("DeleteAccountData", "Home")",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                type: "POST",
+            },
+            parameterMap: function (options, operation) {
+                if (operation !== "read" && options.models) {
+                    return kendo.stringify(options.models);
+                }
+            }
+        },
+        batch: true,
+        pageSize: 20,
+        schema: {
+            model: {
+                    id: "Id",
+                    fields:
+                    {
+                        Account: { editable: true, nullable: false, validation: { required: true } },
+                        Description: { editable: true, nullable: false, validation: { required: true } },
+                        CurrencyCode: { editable: true, nullable: false, validation: { required: true } },
+                        Amount: { type: "number", editable: true, nullable: false, validation: { required: true } },
+                    }
+            }
+        }
+    });
+
+</script>
+
+
+<div id="example">
+    <div class="demo-section k-content">
+        <div id="tabstrip">
+            <ul>
+                <li class="k-state-active">
+                    Data Upload
+                </li>
+                <li>
+                    Data Management
+                </li>
+            </ul>
+            <div>
+                <div class="demo-section k-content">
+                    <input name="files" id="files" type="file" accept=".xlsx, .csv" />
+                    <div id="MsgId" style="display:none" class="isa_success"></div>
+                    <div id="WarningMsgId" style="display:none" class="isa_warning"></div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <div id="grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
