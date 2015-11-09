@@ -1,0 +1,11 @@
+
+SetUp Instruction
+
+This Web Application follows code first approach. Please set your database server connection string in web config - KPMGDbConnection
+So Application will be create data base if not exixts. 
+
+**** Only Set Database ServerName&Path and DatabaseName ***********
+
+Example - 
+
+<add name="KPMGDbConnection" connectionString="Data Source=ServerName&Path;Initial Catalog=DatabaseName;Integrated Security=True;MultipleActiveResultSets=true" providerName="System.Data.SqlClient" />

@@ -1,0 +1,19 @@
+ASP.NET MVC Software Developer Assignment
+You have up to a day to develop a small web application per the brief below using Visual Studio 2013 and written in ASP.NET MVC and C# in order to demonstrate your problem solving and coding skills.
+Problem
+You are designing a web application that processes account transaction data to calculate tax figures for a client tax return. We are interested in the data input/manipulation stage of the process which is achieved through an upload feature.
+The transaction data has 4 columns: Account (text), Description (text), Currency Code (string) and Amount (decimal) and could be attached to a Database with 1m+ rows.  The format of the data will be in Excel (xlsx) or CSV and each individual file could contain up to 100k rows.
+Requirement
+To develop a small web application that does the following:
+-	Has a clear interface with menu bar for navigation;
+-	Allow the user to select a file and show the current file name (only one of XLSX or CSV needs to be supported at this stage);
+-	Allow the user to upload the content of the current file to a table in a SQL database;
+-	Each line of data should be validated before it is uploaded – all fields are required, Currency Code must be a valid ISO 4217 currency code and Amount must be a valid number;
+-	On completion, the number of lines imported and the details of any lines ignored due to failed validation should be shown;
+-	Allow user to see all the data transaction data in the system;
+-	If time allows, allow user to remove or edit the transaction data;
+Any solution should demonstrate best practices where appropriate such as SOLID principles.
+To be supplied
+-	Assessment Code (ideally hosted via something like GitHub)
+-	Any database scripts
+Any setup instructions
