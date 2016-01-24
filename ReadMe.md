@@ -22,4 +22,4 @@ So Application will be create database if not exixts.
 
 Example - 
 
-<add name="BulkDataProcessDbConnection" connectionString="Data Source=ServerName&Path;Initial Catalog=DatabaseName;Integrated Security=True;MultipleActiveResultSets=true" providerName="System.Data.SqlClient" />
+`<add name="BulkDataProcessDbConnection" connectionString="Data Source=ServerName&Path;Initial Catalog=DatabaseName;Integrated Security=True;MultipleActiveResultSets=true" providerName="System.Data.SqlClient" />`
